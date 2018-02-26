@@ -16,10 +16,11 @@ function getRandomInt(min, max) {
 function randomEvent(monkeyLeft){
     if(monkeyLeft > 0){
         
-        switch(getRandomInt(0, 2))
+        switch(getRandomInt(0, 3))
         {
             case 0: randomClickLink(); break;
             case 1: randomTypeText(); break;
+            case 2: randomSelectCombo(); break;
         }
         
         randomEvent(monkeyLeft -1);
@@ -48,6 +49,20 @@ function randomTypeText() {
         if(!Cypress.Dom.isHidden(randomTextField)) {
 
             cy.wrap(randomTextField).click({force: true}).type('Hi, the monkey is here!');
+        }
+    });   
+}
+
+function randomSelectCombo() {
+
+    cy.get('select').then($combos => {
+        
+        var randomCombo = $combos.get(getRandomInt(0, $combos.length));
+
+        if(!Cypress.Dom.isHidden(randomCombo)) {
+
+            optionCombo = randomCombo.options[getRandomInt(0, randomCombo.options.length)].value;
+            cy.wrap(randomCombo).select(optionCombo, {force: true});
         }
     });   
 }
