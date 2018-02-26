@@ -15,7 +15,13 @@ function getRandomInt(min, max) {
 
 function randomEvent(monkeyLeft){
     if(monkeyLeft > 0){
-        randomClickLink();
+        
+        switch(getRandomInt(0, 2))
+        {
+            case 0: randomClickLink(); break;
+            case 1: randomTypeText(); break;
+        }
+        
         randomEvent(monkeyLeft -1);
     }
 }
@@ -30,6 +36,18 @@ function randomClickLink() {
 
             cy.wrap(randomLink).click({force: true});
 
+        }
+    });   
+}
+function randomTypeText() {
+
+    cy.get('input').then($textFields => {
+        
+        var randomTextField = $textFields.get(getRandomInt(0, $textFields.length));
+
+        if(!Cypress.Dom.isHidden(randomTextField)) {
+
+            cy.wrap(randomTextField).click({force: true}).type('Hi, the monkey is here!');
         }
     });   
 }
