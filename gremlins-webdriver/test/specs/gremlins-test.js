@@ -18,26 +18,28 @@ function unleashGremlins(ttl, callback) {
   var formFiller = gremlins.species.formFiller();
 
   formFiller.canFillElement(function name(element) {
-    return( (element.type == 'text') ||
+    return ((element.type == 'text') ||
             (element.type == 'password') ||
             (element.type == 'number') ||
             (element.type == 'email') ||
-            (element.tagName == 'TEXTAREA'));
+            (element.tagName == 'TEXTAREA')) && (!element.hidden);
             
   })
 
   var clicker = gremlins.species.clicker();
   
   clicker.canClick(function (element) {
-    return( (element.tagName == 'BUTTON') ||
-            (element.tagName == 'A'));
+    return ((element.tagName == 'BUTTON') ||
+            (element.tagName == 'A')) && (!element.hidden);
   })
   clicker.clickTypes(['click']);
   
   var horde = window.gremlins.createHorde()
                               .gremlin(formFiller)
                               .gremlin(clicker)
-                              .gremlin(gremlins.species.toucher())
+                              .gremlin(gremlins.species.toucher().canTouch(function (element) {
+                                return (!element.hidden);
+                              }))
                               .gremlin(gremlins.species.scroller());
 
   horde.seed(1234);
