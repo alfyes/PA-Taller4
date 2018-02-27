@@ -22,7 +22,7 @@ function unleashGremlins(ttl, callback) {
             (element.type == 'password') ||
             (element.type == 'number') ||
             (element.type == 'email') ||
-            (element.type == 'textarea'));
+            (element.tagName == 'TEXTAREA'));
             
   })
 
