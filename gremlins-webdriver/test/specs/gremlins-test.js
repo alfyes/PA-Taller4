@@ -25,10 +25,18 @@ function unleashGremlins(ttl, callback) {
             (element.type == 'textarea'));
             
   })
+
+  var clicker = gremlins.species.clicker();
+  
+  clicker.canClick(function (element) {
+    return( (element.type == 'button') ||
+            (element.tagName == 'A'));
+  })
+  clicker.clickTypes(['click']);
   
   var horde = window.gremlins.createHorde()
                               .gremlin(formFiller)
-                              .gremlin(gremlins.species.clicker().clickTypes(['click']))
+                              .gremlin(clicker)
                               .gremlin(gremlins.species.toucher())
                               .gremlin(gremlins.species.scroller());
 
