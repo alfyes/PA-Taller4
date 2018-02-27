@@ -14,7 +14,24 @@ function unleashGremlins(ttl, callback) {
     horde.stop();
     callback();
   }
-  var horde = window.gremlins.createHorde();
+  
+  var formFiller = gremlins.species.formFiller();
+
+  formFiller.canFillElement(function name(element) {
+    return( (element.type == 'text') ||
+            (element.type == 'password') ||
+            (element.type == 'number') ||
+            (element.type == 'email') ||
+            (element.type == 'textarea'));
+            
+  })
+  
+  var horde = window.gremlins.createHorde()
+                              .gremlin(formFiller)
+                              .gremlin(gremlins.species.clicker().clickTypes(['click']))
+                              .gremlin(gremlins.species.toucher())
+                              .gremlin(gremlins.species.scroller());
+
   horde.seed(1234);
 
   horde.after(callback);
