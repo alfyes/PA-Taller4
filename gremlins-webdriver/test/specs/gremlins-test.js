@@ -29,7 +29,7 @@ function unleashGremlins(ttl, callback) {
   var clicker = gremlins.species.clicker();
   
   clicker.canClick(function (element) {
-    return( (element.type == 'button') ||
+    return( (element.tagName == 'BUTTON') ||
             (element.tagName == 'A'));
   })
   clicker.clickTypes(['click']);
